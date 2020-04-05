@@ -1,0 +1,8 @@
+prefix: " &6&lCratesX &9&l» "
+
+                                                                                                                                            permissions:
+                                                                                                                                              denied: "&c&lSorry! You don't currently have permission to this command!\n&eIf this is an error, please contact an administrator."
+
+                                                                                                                                            error:
+                                                                                                                                              null:
+                                                                                                                                                location: "Woops! We ran into an error trying to handle the location of this crate.\nContact an administrator if this issue persists."

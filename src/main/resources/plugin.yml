@@ -1,0 +1,10 @@
+  main: com.evak5.cratesx.CratesX
+  name: CratesX
+  version: '1.0-alpha'
+  description: A unique and new type of crate plugin.
+  author: evak5
+
+  commands:
+    cratesx:
+      description: Base command for cratesx
+      aliases: [cratex, cx]

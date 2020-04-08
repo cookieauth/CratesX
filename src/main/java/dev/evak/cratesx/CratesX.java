@@ -1,9 +1,5 @@
 package dev.evak.cratesx;
 
-import dev.evak.cratesx.commands.XCommand;
-import dev.evak.cratesx.events.OpenCrateEvent;
-import dev.evak.cratesx.events.JoinServerEvent;
-import dev.evak.cratesx.events.QuitServerEvent;
 import dev.evak.cratesx.service.crate.Crate;
 import dev.evak.cratesx.utilities.*;
 import org.bukkit.plugin.java.JavaPlugin;

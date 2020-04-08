@@ -27,39 +27,37 @@ package dev.evak.cratesx.utilities;
 import dev.evak.cratesx.CratesX;
 import dev.evak.cratesx.service.crate.Crate;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CrateHandler {
 
-    private ArrayList<Crate> crates;
-    private ArrayList<Location> locations;
+    private Map<Location, Crate> crateMap;
     private Boolean newJoinKeys;
     private Boolean overflowKeys;
-
     private CratesX instance = CratesX.getInstance();
+    private FileConfiguration mainConf = instance.getFileHandler().getFileMap().get(FileType.CONFIG.getName()).getConfig();
 
     public CrateHandler() {
-        crates = new ArrayList<>();
-        locations = new ArrayList<>();
+        crateMap = new HashMap<>();
     }
 
-    public ArrayList<Crate> getCrates() {
-        return crates;
+    public Map<Location, Crate> getCrateMap() {
+        return crateMap;
     }
 
-    public ArrayList<Location> getLocations() {
-        return locations;
+    public void setCrateMap(Map<Location, Crate> crateMap) {
+        this.crateMap = crateMap;
     }
 
-    public void setCrates(ArrayList<Crate> crates) {
-        this.crates = crates;
+    public CratesX getInstance() {
+        return instance;
     }
 
-    public void setLocations(ArrayList<Location> locations) {
-        this.locations = locations;
+    public void setInstance(CratesX instance) {
+        this.instance = instance;
     }
 
     public Boolean getNewJoinKeys() {
@@ -83,8 +81,15 @@ public class CrateHandler {
     }
 
     public void loadCrates() {
+        FileConfiguration config;
         setNewJoinKeys(false);
         setOverflowKeys(instance.getFileHandler().get(FileType.CONFIG.getName()).getConfig().getBoolean(""));
+
+        Crate tempCrate;
+        for (IFile file : instance.getFileHandler().getFileMap().values()) {
+            config = instance.getFileHandler().getFileMap().get(file.getFileName()).getConfig();
+            //tempCrate = new Crate(config.get);
+        }
     }
 
 

@@ -25,13 +25,9 @@
 package dev.evak.cratesx.utilities;
 
 import dev.evak.cratesx.CratesX;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +49,14 @@ public class FileHandler {
 
     public IFile get(String name) {
         return fileMap.get(name);
+    }
+
+    public Map<String, IFile> getFileMap() {
+        return fileMap;
+    }
+
+    public void setFileMap(Map<String, IFile> fileMap) {
+        this.fileMap = fileMap;
     }
 }
 

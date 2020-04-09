@@ -1,0 +1,32 @@
+Crate:                                # <--- MUST include this tag above all of this across ALL crate files.
+  type: 'Casino'                      # Type of crate - Affects the opening duration, speed, animation display, etc.
+  knockback: false                    # Enable/Disable physical knockback if the user has no key(s) to open crate
+  open-commands: []                   # List of commands executed upon SUCCESSFUL crate open
+  preview-menu:                       # Preview settings of CRATE PREVIEW MENU
+    enabled: true                     # Enable/Disable the display of the crate in the CRATE PREVIEW MENU
+    glowing: false                    # Enable/Disable glowing of the item in the CRATE PREVIEW MENU
+    slot: 5                           # The slot this item should be set in the CRATE PREVIEW MENU
+    item: 'minecraft:jukebox'         # Item type of the crate item in the CRATE PREVIEW
+    name: '&c&lGambling Crate'        # Name of the crate item in the CRATE PREVIEW MENU
+    lore: []                          # Lore of the crate item in the CRATE PREVIEW MENU
+  key-settings:
+    glowing: true                     # Enable/Disable glowing of the PHYSICAL key
+    item: 'minecraft:sunflower'       # Item type of the PHYSICAL KEY
+    name: '&c&lGambling Coin'         # Name of the PHYSICAL key
+    lore: []                          # Lore of the PHYSICAL key
+  prizes:
+    '1':                              # To add more prizes, copy below and increment the value to the left of ONE. (1 -> 2)
+      preview:                        
+        item: 'minecraft:diamond'     # Display item in PRIZE CONTENTS menu
+        displayname: "&b&lDIAMOND"    # Display name in PRIZE CONTENTS menu
+        lore: []                      # Lore of display item in PRIZE CONTENTS menu
+        amount: 1                     # Display amount of item in PRIZE CONTENTS menu
+        glowing: false                # Enable/Disable glowing of the item in the PRIZE CONTENTS MENU
+        slot: 14                      # The slot this item should be set in the PRIZE CONTENTS menu
+      chance:                        
+        max-range: 100                # Max range of chane. 5/100 = 5% OR 5/1000 = 0.5%
+        percentage: 5                 # The percent chance out of the max range to receive the prize
+      items: []                       # List of items that are rewarded, I recommend using commands to give more complex/unique/custom items
+      commands: []                    # List of commands executed upon receival of prize
+    '2':
+      #...

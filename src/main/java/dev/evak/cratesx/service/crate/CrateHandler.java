@@ -22,74 +22,48 @@
  *
  */
 
-package dev.evak.cratesx.utilities;
+package dev.evak.cratesx.service.crate;
 
 import dev.evak.cratesx.CratesX;
 import dev.evak.cratesx.service.crate.Crate;
+import dev.evak.cratesx.utilities.files.FileType;
+import dev.evak.cratesx.utilities.files.IFile;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 public class CrateHandler {
+
+    @Getter(AccessLevel.PRIVATE) private static CratesX instance = CratesX.getInstance();
+    @Getter(AccessLevel.PRIVATE) private FileConfiguration mainConf = instance.getFileHandler().getIFile(FileType.CONFIG.getName()).getConfig();
 
     private Map<Location, Crate> crateMap;
     private Boolean newJoinKeys;
     private Boolean overflowKeys;
-    private CratesX instance = CratesX.getInstance();
-    private FileConfiguration mainConf = instance.getFileHandler().getFileMap().get(FileType.CONFIG.getName()).getConfig();
 
     public CrateHandler() {
         crateMap = new HashMap<>();
     }
 
-    public Map<Location, Crate> getCrateMap() {
-        return crateMap;
-    }
+    public void loadCrates() {
+        setNewJoinKeys(false);
+        setOverflowKeys(instance.getFileHandler().getIFile(FileType.CONFIG.getName()).getConfig().getBoolean(""));
 
-    public void setCrateMap(Map<Location, Crate> crateMap) {
-        this.crateMap = crateMap;
-    }
-
-    public CratesX getInstance() {
-        return instance;
-    }
-
-    public void setInstance(CratesX instance) {
-        this.instance = instance;
-    }
-
-    public Boolean getNewJoinKeys() {
-        return newJoinKeys;
-    }
-
-    public void setNewJoinKeys(Boolean newJoinKeys) {
-        this.newJoinKeys = newJoinKeys;
-    }
-
-    public Boolean getOverflowKeys() {
-        return overflowKeys;
-    }
-
-    public void setOverflowKeys(Boolean overflowKeys) {
-        this.overflowKeys = overflowKeys;
+        for (IFile file : instance.getFileHandler().getFileMap().values()) {
+            if(file.getFileName().equals(FileType.CONFIG.getName()) || file.getFileName().equals(FileType.MESSAGES.getName())) continue;
+            FileConfiguration config = instance.getFileHandler().getFileMap().get(file.getFileName()).getConfig();
+            Crate tempCrate = new Crate(file.getFileNoExtension(), config);
+        }
     }
 
     public void loadLocations() {
 
-    }
-
-    public void loadCrates() {
-        FileConfiguration config;
-        setNewJoinKeys(false);
-        setOverflowKeys(instance.getFileHandler().get(FileType.CONFIG.getName()).getConfig().getBoolean(""));
-
-        Crate tempCrate;
-        for (IFile file : instance.getFileHandler().getFileMap().values()) {
-            config = instance.getFileHandler().getFileMap().get(file.getFileName()).getConfig();
-            //tempCrate = new Crate(config.get);
-        }
     }
 
 

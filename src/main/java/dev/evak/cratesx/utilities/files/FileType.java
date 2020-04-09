@@ -1,4 +1,4 @@
-package dev.evak.cratesx.utilities;
+package dev.evak.cratesx.utilities.files;
 
 public enum FileType {
 

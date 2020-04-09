@@ -2,7 +2,7 @@ package dev.evak.cratesx.commands;
 
 import dev.evak.cratesx.CratesX;
 import dev.evak.cratesx.service.crate.Crate;
-import dev.evak.cratesx.utilities.FileType;
+import dev.evak.cratesx.utilities.files.FileType;
 import dev.evak.cratesx.utilities.Utils;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public class XCommand implements CommandExecutor {
     private Utils utils = CratesX.getInstance().getUtils();
     private CratesX instance = CratesX.getInstance();
-    private FileConfiguration config = instance.getFileHandler().get(FileType.CONFIG.getName()).getConfig();
+    private FileConfiguration config = instance.getFileHandler().getIFile(FileType.CONFIG.getName()).getConfig();
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {

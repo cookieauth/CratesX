@@ -1,5 +1,10 @@
-package dev.evak.cratesx.utilities;
+package dev.evak.cratesx.utilities.files;
 
+import dev.evak.cratesx.CratesX;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.SneakyThrows;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,31 +13,33 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.IOException;
 
+@Data
 public class IFile {
 
+    @Getter(AccessLevel.PRIVATE) private static CratesX instance = CratesX.getInstance();
+
     private File file;
-    private FileConfiguration fileConfiguration;
+    private FileConfiguration config;
     private String folder, fileName;
-    private Plugin plugin;
 
     public IFile(File file, FileConfiguration fileConfiguration) {
         this.file = file;
-        this.fileConfiguration = fileConfiguration;
+        this.config = fileConfiguration;
     }
 
-    public IFile(File file, FileConfiguration fileConfiguration, String folder) {
+    /*public IFile(File file, FileConfiguration fileConfiguration, String folder) {
         this.fileName = file.getName();
         this.file = file;
         this.fileConfiguration = fileConfiguration;
         this.folder = folder;
-    }
+    }*/
 
     public IFile(String fileName) {
         this.fileName = fileName;
-        file = new File(plugin.getDataFolder(), fileName);
-        fileConfiguration = new YamlConfiguration();
+        file = new File(instance.getDataFolder(), fileName);
+        config = new YamlConfiguration();
         try {
-            fileConfiguration.load(file);
+            config.load(file);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -41,10 +48,10 @@ public class IFile {
 
     public IFile(String fileName, String folder) {
         this.fileName = fileName;
-        file = new File(plugin.getDataFolder(), "/" + folder + "/" + fileName);
-        fileConfiguration = new YamlConfiguration();
+        file = new File(instance.getDataFolder(), "/" + folder + "/" + fileName);
+        config = new YamlConfiguration();
         try {
-            fileConfiguration.load(file);
+            config.load(file);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -53,7 +60,7 @@ public class IFile {
 
     public void save() {
         try {
-            fileConfiguration.save(file);
+            config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +69,7 @@ public class IFile {
     public void reload() {
         try {
             try {
-                fileConfiguration.load(file);
+                config.load(file);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -73,59 +80,21 @@ public class IFile {
         }
     }
 
+    @SneakyThrows
     public void validate() {
         if (!file.exists()) {
             file.getParentFile().mkdirs();
             if (folder.isEmpty()) {
-                plugin.saveResource(file.getName() + ".yml", false);
+                instance.saveResource(file.getName() + ".yml", false);
             } else {
-                plugin.saveResource(getFolder() + "/" + file.getName() + ".yml", false);
+                instance.saveResource(getFolder() + "/" + file.getName() + ".yml", false);
             }
         }
-
-        try {
-            fileConfiguration.load(file);
-            setFileConfiguration(fileConfiguration);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public FileConfiguration getConfig() {
-        return fileConfiguration;
-    }
-
-    public void setFileConfiguration(FileConfiguration fileConfiguration) {
-        this.fileConfiguration = fileConfiguration;
-    }
-
-    public String getFolder() {
-        return folder;
-    }
-
-    public void setFolder(String folder) {
-        this.folder = folder;
-    }
-
-    public String getFileName() {
-        return fileName;
+        config.load(file);
     }
 
     public String getFileNoExtension() {
         return fileName.replaceAll(".yml", "");
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
     }
 
 

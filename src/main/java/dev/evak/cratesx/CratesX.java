@@ -1,7 +1,10 @@
 package dev.evak.cratesx;
 
 import dev.evak.cratesx.service.crate.Crate;
+import dev.evak.cratesx.service.crate.CrateHandler;
 import dev.evak.cratesx.utilities.*;
+import dev.evak.cratesx.utilities.files.FileHandler;
+import dev.evak.cratesx.utilities.files.IFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;

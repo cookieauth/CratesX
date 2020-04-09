@@ -22,42 +22,53 @@
  *
  */
 
-package dev.evak.cratesx.utilities;
+package dev.evak.cratesx.utilities.files;
 
 import dev.evak.cratesx.CratesX;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.SneakyThrows;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FileHandler {
 
+    @Getter(AccessLevel.PRIVATE) private static CratesX instance = CratesX.getInstance();
+    
     private Map<String, IFile> fileMap;
 
     public FileHandler() {
         fileMap = new HashMap<>();
     }
 
+    @SneakyThrows
     public void loadFiles() {
-        if (new File(CratesX.getInstance().getDataFolder() + File.separator + "crates").exists()) {
-            for (File file : new File(CratesX.getInstance().getDataFolder() + File.separator + "crates").listFiles()) {
-                fileMap.put(file.getName().replace(".yml", ""), new IFile(file, YamlConfiguration.loadConfiguration(file)));
-            }
-        }
+        List<File> folders = new ArrayList<>();
+        folders.add(instance.getDataFolder());
+        Arrays.stream(instance.getDataFolder().listFiles()).filter(File::isDirectory).forEach(folders::add);
+
+        folders.stream().flatMap(filesInFolders -> Arrays.stream(filesInFolders.listFiles()))
+                .filter(ymlFile -> ymlFile.getName().endsWith(".yml"))
+                .forEach(file -> {
+                    String fileName = file.getName().replace(".yml", "");
+                    fileMap.put(fileName, new IFile(file, YamlConfiguration.loadConfiguration(file)));
+        });
     }
 
-    public IFile get(String name) {
+    public IFile getIFile(String name) {
         return fileMap.get(name);
     }
 
-    public Map<String, IFile> getFileMap() {
-        return fileMap;
+    public boolean exists(String name) {
+        return fileMap.containsKey(name);
     }
 
-    public void setFileMap(Map<String, IFile> fileMap) {
-        this.fileMap = fileMap;
+    public Map<String, IFile> getFileMap() {
+        return new HashMap<>(fileMap);
     }
+
 }
 
 

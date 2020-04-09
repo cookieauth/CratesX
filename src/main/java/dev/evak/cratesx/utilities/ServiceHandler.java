@@ -5,6 +5,7 @@ import dev.evak.cratesx.commands.XCommand;
 import dev.evak.cratesx.events.CrateInteractEvent;
 import dev.evak.cratesx.events.JoinServerEvent;
 import dev.evak.cratesx.events.QuitServerEvent;
+import dev.evak.cratesx.utilities.files.IFile;
 
 import java.util.Objects;
 
